@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>抓小虎</title>
+		
+		<style type="text/css">
+			td{
+				width:100px; 
+				height:100px;
+			}
+			
+			table{
+				cursor: url("img/shubiao.png"),url(img/shubiao.png),auto;
+				margin-top: -200px;
+			}
+			
+			input{
+				font-size: 15px;
+				font-family: "微软雅黑";
+				font-weight: bold;
+				color: white;
+				width: 120px;
+				
+				border: none;
+				border-radius: 5px;
+				background-color: green;
+				padding: 5px;
+				margin-top:80px ;
+				margin-left: 10px;
+			}
+
+			.ys{
+				
+				color: black;
+				font-family: "黑体";
+				font-size: 15px;	
+				font-weight: bold;
+				
+				width: 120px;
+				margin-top: -110px;	
+				margin-left: 10px;		
+			}
+			
+			.ys1{
+				color: red;
+			}
+			
+			.ys2{
+				color: yellow;
+			}
+			
+			img{
+				width:100px;
+				height:100px;
+			}
+			
+		</style>
+	</head>
+	
+	
+	<body background="img/bj.jpg" >
+		
+			<input type="button" value="开始游戏" onclick="begin()"><br/>
+		    <input type="button" value="结束游戏" onclick="finish()">
+		
+		<table border="6" cellpadding="3" cellspacing="0" bordercolor="green" width="300" height="300" align="center" bgcolor="green">
+			<tr >
+				<td><img src="./img/cc.jpg" /></td>
+				<td><img src="./img/cc.jpg" /></td>
+				<td><img src="./img/cc.jpg" /></td>
+			</tr>
+			<tr>
+				<td><img src="./img/cc.jpg" /></td>
+				<td><img src="./img/cc.jpg" /></td>
+				<td><img src="./img/cc.jpg" /></td>
+			</tr>
+			<tr>
+	            <td><img src="./img/cc.jpg" /></td>
+				<td ><img src="./img/cc.jpg" /></td>
+				<td><img src="./img/cc.jpg" /></td>
+			</tr>
+		</table>
+		
+		<div class="ys">
+			老虎要回喵星搬救兵入侵地球了，抓住它们。<br/><
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ·逃走了<span id="escape" class="ys1">0</span>只老虎。(～﹃～)~zZ <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ·抓住了<span id="cat" class="ys2">0</span>只老虎。o(≧v≦)o~~
+		</div>
+     
+ 
+     <script type="text/javascript">
+     
+        var shuzu=document.getElementsByTagName("img");
+        var shuzi=0; //老虎出现位置
+        var escape=0; //逃跑只数
+        var cat=0; //网住只数  
+        var zhuangtai=false; //游戏状态
+        var aid,did;
+        
+        //开始
+        function begin(){
+        	if(!zhuangtai){
+        		zhuangtai=true;
+        	   setTimeout("appear()",Math.random()+1);
+        	  }
+        	else{ 
+        	   alert("历史不可重来。~ ( ^.^ ) ~");
+        	  }
+        }
+     
+        //出现   
+     	function appear(){
+     		shuzi=Math.floor(Math.random()*9);
+     		shuzu[shuzi].setAttribute("src","img/tigersx.jpg");
+     		shuzu[shuzi].setAttribute("onclick","catchit()");
+     		did=setTimeout("disappear()",Math.random()+1000);
+     	}
+     	
+     	//消失
+     	function disappear(){
+     		if(escape>=5){
+     			finish();
+     		}else{
+     		    if(shuzu[shuzi].getAttribute("src")=="img/tigersx.jpg"){
+     			escape++;
+     			var esc=document.getElementById("escape");
+     			esc.innerHTML=escape;  			
+     		} 	    
+     		shuzu[shuzi].setAttribute("src","img/cc.jpg");
+     		aid=setTimeout("appear()",Math.random()+900);
+     		}
+     	}
+     	
+     	//网住
+        function catchit(){
+        	 if(shuzu[shuzi].getAttribute("src")=="img/tigersx.jpg"){
+     			cat++;
+     			var c=document.getElementById("cat");
+     			c.innerHTML=cat;
+     			}
+        	shuzu[shuzi].setAttribute("src","img/tigerkt.jpg");
+        	shuzu[shuzi].removeAttribute("onclick");
+        }
+        
+        //结束
+        function finish(){  
+        	clearTimeout(did);
+        	clearTimeout(aid);
+        	alert("游戏结束。喵星人要崛起了。╮(╯▽╰)╭ ");
+        	shuzu[shuzi].setAttribute("src","img/cc.jpg");
+        	escape=0;
+        	cat=0;
+        	document.getElementById("escape").innerHTML=0;
+        	document.getElementById("cat").innerHTML=0;
+            zhuangtai=false;
+        }
+        
+     </script>
+     
+	</body>
+</html>
